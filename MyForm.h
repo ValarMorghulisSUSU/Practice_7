@@ -334,6 +334,7 @@ namespace WindowsFormTemplate {
 			this->textBox2->Name = L"textBox2";
 			this->textBox2->Size = System::Drawing::Size(343, 20);
 			this->textBox2->TabIndex = 2;
+			this->textBox2->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox2_TextChanged);
 			// 
 			// textBox1
 			// 
@@ -341,6 +342,7 @@ namespace WindowsFormTemplate {
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(343, 20);
 			this->textBox1->TabIndex = 1;
+			this->textBox1->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox1_TextChanged);
 			// 
 			// comboBox2
 			// 
@@ -356,6 +358,7 @@ namespace WindowsFormTemplate {
 			this->comboBox2->Name = L"comboBox2";
 			this->comboBox2->Size = System::Drawing::Size(343, 21);
 			this->comboBox2->TabIndex = 0;
+			this->comboBox2->SelectedIndexChanged += gcnew System::EventHandler(this, &MyForm::comboBox2_SelectedIndexChanged);
 			// 
 			// checkBox1
 			// 
@@ -668,11 +671,7 @@ namespace WindowsFormTemplate {
 			this->textBox1->Text = "";
 			this->textBox2->Text = "";
 			this->textBox3->Text = "";
-			if (this->comboBox2->SelectedIndex == -1 || this->textBox1->Text == "" || this->textBox2->Text == "" || this->textBox3->Text == "") {
-				this->button2->Enabled = false;
-			}
-			else
-				this->button2->Enabled = true;
+			this->button2->Enabled = false;
 		}
 		else
 			if (this->checkBox1->Checked == false)
@@ -687,15 +686,11 @@ namespace WindowsFormTemplate {
 			this->groupBox1->Enabled = true;
 			this->button2->Text = "Добавить заказ";
 			this->textBox3->Enabled = false;
+			this->button2->Enabled = false;
 			this->comboBox2->SelectedIndex = -1;
 			this->textBox1->Text = "";
 			this->textBox2->Text = "";
 			this->textBox3->Text = "";
-			if (this->comboBox2->SelectedIndex == -1 || this->textBox1->Text == "" || this->textBox2->Text == "") {
-				this->button2->Enabled = false;
-			}
-			else
-				this->button2->Enabled = true;
 		}
 		else
 			if (this->checkBox2->Checked == false && this->checkBox3->Checked ==false
@@ -713,13 +708,9 @@ namespace WindowsFormTemplate {
 			this->textBox1->Text = "";
 			this->textBox2->Text = "";
 			this->textBox3->Text = "";
-			if (this->comboBox2->SelectedIndex == -1||this->textBox1->Text == "" || this->textBox2->Text == "" || this->textBox3->Text == "") {
-				this->button2->Enabled = false;
-			}
-			else
-				this->button2->Enabled = true;
 			this->button2->Text = "Найти заказ";
 			this->textBox3->Enabled = true;
+			this->button2->Enabled = false;
 		}
 		else
 			if (this->checkBox2->Checked == false && this->checkBox1->Checked == false
@@ -766,6 +757,11 @@ private: System::Void textBox3_TextChanged(System::Object^ sender, System::Event
 		this->textBox1->Text = this->OrdBase[index]->name;
 		this->comboBox2->Text = this->OrdBase[index]->medicine->med;
 		this->textBox2->Text = this->OrdBase[index]->telnumber;
+		if (this->comboBox2->SelectedIndex == -1||this->textBox1->Text == "" || this->textBox2->Text == "" || this->textBox3->Text == "") {
+				this->button2->Enabled = false;
+			}
+			else
+				this->button2->Enabled = true;
 	}
 	catch (...)
 	{
@@ -796,6 +792,31 @@ private: System::Void comboBox1_SelectedIndexChanged(System::Object^ sender, Sys
 		this->button10->Enabled = true;
 	}
 
+}
+private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	if (!this->textBox3->Enabled)
+		if (this->comboBox2->SelectedIndex == -1 || this->textBox1->Text == "" || this->textBox2->Text == "") {
+			this->button2->Enabled = false;
+		}
+		else
+			this->button2->Enabled = true;
+}
+private: System::Void textBox2_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	if (!this->textBox3->Enabled)
+		if (this->comboBox2->SelectedIndex == -1 || this->textBox1->Text == "" || this->textBox2->Text == "") {
+			this->button2->Enabled = false;
+		}
+		else
+			this->button2->Enabled = true;
+}
+
+private: System::Void comboBox2_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+	if (!this->textBox3->Enabled)
+		if (this->comboBox2->SelectedIndex == -1 || this->textBox1->Text == "" || this->textBox2->Text == "") {
+			this->button2->Enabled = false;
+		}
+		else
+			this->button2->Enabled = true;
 }
 };
 }
